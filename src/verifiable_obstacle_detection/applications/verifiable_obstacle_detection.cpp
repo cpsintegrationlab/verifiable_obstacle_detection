@@ -48,16 +48,31 @@ main()
 	boost::geometry::assign_points(detection_safety, detection_safety_points);
 	boost::geometry::correct(detection_safety);
 
-	std::cout << "detection_safety " << boost::geometry::dsv(detection_safety) << " has an area of "
-			<< boost::geometry::area(detection_safety) << "." << std::endl;
-
 	detections_safety.push_back(detection_safety);
 
 	VerifiableObstacleDetection verifiable_obstacle_detection;
 
 	verifiable_obstacle_detection.initializeForApollo();
+
+	const auto ego = verifiable_obstacle_detection.getEgo();
+
+	std::cout << "ego " << boost::geometry::dsv(ego) << " has an area of "
+			<< boost::geometry::area(ego) << "." << std::endl;
+
+	std::cout << "detection_safety " << boost::geometry::dsv(detection_safety) << " has an area of "
+			<< boost::geometry::area(detection_safety) << "." << std::endl;
+
 	verifiable_obstacle_detection.processOneFrameForApollo("", detections_mission,
 			detections_safety);
+
+	const auto detections_safety_distance_end_points =
+			verifiable_obstacle_detection.getDetectionsSafetyDistanceEndPoints();
+
+	const auto& distance_end_points_ego = detections_safety_distance_end_points[0].first;
+	const auto& distance_end_points_detection_safety = detections_safety_distance_end_points[0].second;
+
+	std::cout << "distance_end_points_ego: " << boost::geometry::dsv(distance_end_points_ego) << "." << std::endl;
+	std::cout << "distance_end_points_detection_safety: " << boost::geometry::dsv(distance_end_points_detection_safety) << "." << std::endl;
 
 	return 0;
 }

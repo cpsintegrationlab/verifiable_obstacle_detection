@@ -10,6 +10,8 @@
 
 #include <Eigen/Dense>
 #include <memory>
+#include <tuple>
+#include <vector>
 
 #include "geometry/distance.h"
 #include "geometry/geometry.h"
@@ -21,6 +23,12 @@ class VerifiableObstacleDetection
 public:
 
 	VerifiableObstacleDetection();
+
+	std::vector<std::pair<Point2D, Point2D>>
+	getDetectionsSafetyDistanceEndPoints() const;
+
+	Polygon
+	getEgo() const;
 
 	void
 	disableConsoleLogging();
@@ -35,6 +43,7 @@ public:
 
 private:
 
+	std::vector<std::pair<Point2D, Point2D>> detections_safety_distance_end_points_; // <ego, detections_safety>
 	Distance distance_;
 	Polygon ego_;
 	Eigen::Vector3d ego_extent_;
