@@ -2,6 +2,7 @@
 add_library(
 	vod_geometry SHARED
 	distance.cpp
+	line.cpp
 )
 
 # Set header targets
