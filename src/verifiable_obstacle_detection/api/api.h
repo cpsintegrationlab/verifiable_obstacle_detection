@@ -36,9 +36,8 @@ public:
 	bool
 	initializeForApollo();
 
-	const std::string
-	processOneFrameForApollo(const std::string& frame_name,
-			const std::vector<Polygon>& detections_mission,
+	void
+	processOneFrameForApollo(const std::vector<Polygon>& detections_mission,
 			const std::vector<Polygon>& detections_safety);
 
 private:

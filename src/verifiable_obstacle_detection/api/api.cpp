@@ -53,8 +53,8 @@ VerifiableObstacleDetection::initializeForApollo()
 	return true;
 }
 
-const std::string
-VerifiableObstacleDetection::processOneFrameForApollo(const std::string& frame_name,
+void
+VerifiableObstacleDetection::processOneFrameForApollo(
 		const std::vector<Polygon>& detections_mission,
 		const std::vector<Polygon>& detections_safety)
 {
@@ -67,8 +67,6 @@ VerifiableObstacleDetection::processOneFrameForApollo(const std::string& frame_n
 
 		detections_safety_distance_end_points_.push_back(distance_end_points);
 	}
-
-	return frame_name;
 }
 } // namespace verifiable_obstacle_detection
 
