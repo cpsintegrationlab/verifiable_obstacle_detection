@@ -71,3 +71,4 @@ endif()
 # Add subdirectories
 add_subdirectory(api)
 add_subdirectory(applications)
+add_subdirectory(geometry)

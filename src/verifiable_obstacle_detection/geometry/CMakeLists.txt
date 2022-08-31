@@ -1,29 +1,27 @@
 # Add libraries
 add_library(
-	vod_api SHARED
-	api.cpp
+	vod_geometry SHARED
+	distance.cpp
 )
 
 # Set header targets
-file(GLOB VOD_API_HEADERS "*.h" "*.hpp")
+file(GLOB VOD_GEOMETRY_HEADERS "*.h" "*.hpp")
 
 # Set library target properties
 set_target_properties(
-	vod_api PROPERTIES
-	PUBLIC_HEADER "${VOD_API_HEADERS}"
+	vod_geometry PROPERTIES
+	PUBLIC_HEADER "${VOD_GEOMETRY_HEADERS}"
 )
 
 # Set library link targets
 target_link_libraries(
-	vod_api
 	vod_geometry
 	${Boost_LIBRARIES}
-	${OpenCV_LIBS}
 )
 
 # Set installation targets
 install(
-	TARGETS vod_api
+	TARGETS vod_geometry
 	LIBRARY DESTINATION lib
-	PUBLIC_HEADER DESTINATION include/verifiable_obstacle_detection/api
+	PUBLIC_HEADER DESTINATION include/verifiable_obstacle_detection/geometry
 )
