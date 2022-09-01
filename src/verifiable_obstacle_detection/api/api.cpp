@@ -313,25 +313,26 @@ VerifiableObstacleDetection::plot(const std::string& frame_name,
 		return;
 	}
 
-	boost::geometry::svg_mapper<Point2D> mapper(log_file, 400, 400,
-			"style='fill-opacity:1;fill:rgb(255,255,255)'");
+	std::unique_ptr<boost::geometry::svg_mapper<Point2D>> mapper(
+			new boost::geometry::svg_mapper<Point2D>(log_file, 200, 200,
+					"style='fill-opacity:1;fill:rgb(255,255,255)'"));
 
-	mapper.add(ego_);
-	mapper.map(ego_, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(0,0,255);stroke-width:5");
+	mapper->add(ego_);
+	mapper->map(ego_, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(0,0,255);stroke-width:5");
 
 	// Iterate through all mission layer detections
 	for (const auto &detection_mission : detections_mission)
 	{
-		mapper.add(detection_mission);
-		mapper.map(detection_mission,
+		mapper->add(detection_mission);
+		mapper->map(detection_mission,
 				"fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(255,0,0);stroke-width:5");
 	}
 
 	// Iterate through all safety layer detections
 	for (const auto &detection_safety : detections_safety)
 	{
-		mapper.add(detection_safety);
-		mapper.map(detection_safety,
+		mapper->add(detection_safety);
+		mapper->map(detection_safety,
 				"fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(0,255,0);stroke-width:5");
 	}
 
@@ -340,33 +341,36 @@ VerifiableObstacleDetection::plot(const std::string& frame_name,
 	{
 		const Segment segment(detection_safety_distance_end_points_.first,
 				detection_safety_distance_end_points_.second);
-		mapper.add(segment);
-		mapper.map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(0,0,255);stroke-width:5");
+		mapper->add(segment);
+		mapper->map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(0,0,255);stroke-width:5");
 	}
 
 	// Iterate through all mission layer projected segments
 	for (const auto &segment_projected_mission_ : segments_projected_mission_)
 	{
 		const Segment segment(segment_projected_mission_.first, segment_projected_mission_.second);
-		mapper.add(segment);
-		mapper.map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(255,0,0);stroke-width:5");
+		mapper->add(segment);
+		mapper->map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(255,0,0);stroke-width:5");
 	}
 
 	// Iterate through all safety layer projected segments
 	for (const auto &segment_projected_safety_ : segments_projected_safety_)
 	{
 		const Segment segment(segment_projected_safety_.first, segment_projected_safety_.second);
-		mapper.add(segment);
-		mapper.map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(0,255,0);stroke-width:5");
+		mapper->add(segment);
+		mapper->map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(0,255,0);stroke-width:5");
 	}
 
 	// Iterate through all overlap segments
 	for (const auto &segment_overlap_ : segments_overlap_)
 	{
 		const Segment segment(segment_overlap_.first, segment_overlap_.second);
-		mapper.add(segment);
-		mapper.map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(255,255,0);stroke-width:5");
+		mapper->add(segment);
+		mapper->map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(255,255,0);stroke-width:5");
 	}
+
+	mapper.reset();
+	log_file.close();
 }
 } // namespace verifiable_obstacle_detection
 
