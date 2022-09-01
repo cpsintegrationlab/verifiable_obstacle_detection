@@ -22,6 +22,30 @@ VerifiableObstacleDetection::VerifiableObstacleDetection() :
 }
 
 std::vector<std::pair<Point2D, Point2D>>
+VerifiableObstacleDetection::getSegmentsProjectedMission() const
+{
+	return segments_projected_mission_;
+}
+
+std::vector<std::pair<Point2D, Point2D>>
+VerifiableObstacleDetection::getSegmentsProjectedSafety() const
+{
+	return segments_projected_safety_;
+}
+
+std::vector<std::pair<Point2D, Point2D>>
+VerifiableObstacleDetection::getSegmentsOverlap() const
+{
+	return segments_overlap_;
+}
+
+std::vector<double>
+VerifiableObstacleDetection::getDetectionsSafetyCoverages() const
+{
+	return detections_safety_coverages_;
+}
+
+std::vector<std::pair<Point2D, Point2D>>
 VerifiableObstacleDetection::getDetectionsSafetyDistanceEndPoints() const
 {
 	return detections_safety_distance_end_points_;
@@ -111,6 +135,8 @@ VerifiableObstacleDetection::processOneFrameForApollo(
 
 		const auto segment_overlap = findOverlap(segment_projected_mission,
 				segment_projected_safety);
+
+		segments_overlap_.push_back(segment_overlap);
 
 		const auto segment_projected_safety_length = findLength(segment_projected_safety);
 		const auto segment_overlap_length = findLength(segment_overlap);
@@ -266,24 +292,6 @@ VerifiableObstacleDetection::findLength(const std::pair<Point2D, Point2D>& segme
 	return sqrt(segment_x_error_squared + segment_y_error_squared);
 }
 
-std::vector<std::pair<Point2D, Point2D>>
-VerifiableObstacleDetection::getSegmentsProjectedMission() const
-{
-	return segments_projected_mission_;
-}
-
-std::vector<std::pair<Point2D, Point2D>>
-VerifiableObstacleDetection::getSegmentsProjectedSafety() const
-{
-	return segments_projected_safety_;
-}
-
-std::vector<double>
-VerifiableObstacleDetection::getDetectionsSafetyCoverages() const
-{
-	return detections_safety_coverages_;
-}
-
 void
 VerifiableObstacleDetection::plot(const std::vector<Polygon>& detections_mission,
 		const std::vector<Polygon>& detections_safety)
@@ -340,6 +348,14 @@ VerifiableObstacleDetection::plot(const std::vector<Polygon>& detections_mission
 		const Segment segment(segment_projected_safety_.first, segment_projected_safety_.second);
 		mapper.add(segment);
 		mapper.map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(0,255,0);stroke-width:5");
+	}
+
+	// Iterate through all overlap segments
+	for (const auto &segment_overlap_ : segments_overlap_)
+	{
+		const Segment segment(segment_overlap_.first, segment_overlap_.second);
+		mapper.add(segment);
+		mapper.map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(255,255,0);stroke-width:5");
 	}
 }
 } // namespace verifiable_obstacle_detection

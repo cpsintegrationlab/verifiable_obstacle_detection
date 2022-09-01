@@ -32,6 +32,9 @@ public:
 	std::vector<std::pair<Point2D, Point2D>>
 	getSegmentsProjectedSafety() const;
 
+	std::vector<std::pair<Point2D, Point2D>>
+	getSegmentsOverlap() const;
+
 	std::vector<double>
 	getDetectionsSafetyCoverages() const;
 
@@ -74,6 +77,7 @@ private:
 	std::vector<std::pair<Point2D, Point2D>> detections_safety_distance_end_points_; // <ego, detections_safety>
 	std::vector<std::pair<Point2D, Point2D>> segments_projected_mission_;
 	std::vector<std::pair<Point2D, Point2D>> segments_projected_safety_;
+	std::vector<std::pair<Point2D, Point2D>> segments_overlap_;
 	std::vector<double> detections_safety_coverages_;
 
 	bool plot_;

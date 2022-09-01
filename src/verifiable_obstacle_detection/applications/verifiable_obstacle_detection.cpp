@@ -31,7 +31,7 @@ main()
 	Eigen::Vector3d detection_safety_extent;
 	std::vector<Point2D> detection_safety_points;
 
-	detection_mission_center.x() = 28.5936356 - 10;
+	detection_mission_center.x() = 28.5936356 - 5;
 	detection_mission_center.y() = -2.06204128 - 10;
 	detection_mission_center.z() = 0.551451683;
 
