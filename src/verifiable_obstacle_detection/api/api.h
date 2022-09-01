@@ -9,6 +9,7 @@
 #define API_API_H_
 
 #include <memory>
+#include <string>
 #include <tuple>
 #include <vector>
 
@@ -45,10 +46,11 @@ public:
 	disableConsoleLogging();
 
 	bool
-	initializeForApollo();
+	initializeForApollo(const std::string& log_path);
 
 	void
-	processOneFrameForApollo(const std::vector<Polygon>& detections_mission,
+	processOneFrameForApollo(const std::string& frame_name,
+			const std::vector<Polygon>& detections_mission,
 			const std::vector<Polygon>& detections_safety);
 
 private:
@@ -67,7 +69,7 @@ private:
 	findLength(const std::pair<Point2D, Point2D>& segment);
 
 	void
-	plot(const std::vector<Polygon>& detections_mission,
+	plot(const std::string& frame_name, const std::vector<Polygon>& detections_mission,
 			const std::vector<Polygon>& detections_safety);
 
 	Distance distance_;
@@ -81,6 +83,7 @@ private:
 	std::vector<double> detections_safety_coverages_;
 
 	bool plot_;
+	std::string log_path_;
 };
 } // namespace verifiable_obstacle_detection
 

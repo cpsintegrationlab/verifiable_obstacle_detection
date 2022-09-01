@@ -66,8 +66,10 @@ VerifiableObstacleDetection::disableConsoleLogging()
 }
 
 bool
-VerifiableObstacleDetection::initializeForApollo()
+VerifiableObstacleDetection::initializeForApollo(const std::string& log_path)
 {
+	log_path_ = log_path;
+
 	std::vector<Point2D> ego_points;
 
 	ego_points.push_back(Point2D(ego_extent_.x() / 2, ego_extent_.y() / 2));
@@ -82,7 +84,7 @@ VerifiableObstacleDetection::initializeForApollo()
 }
 
 void
-VerifiableObstacleDetection::processOneFrameForApollo(
+VerifiableObstacleDetection::processOneFrameForApollo(const std::string& frame_name,
 		const std::vector<Polygon>& detections_mission,
 		const std::vector<Polygon>& detections_safety)
 {
@@ -153,7 +155,7 @@ VerifiableObstacleDetection::processOneFrameForApollo(
 		}
 	}
 
-	plot(detections_mission, detections_safety);
+	plot(frame_name, detections_mission, detections_safety);
 }
 
 void
@@ -293,7 +295,8 @@ VerifiableObstacleDetection::findLength(const std::pair<Point2D, Point2D>& segme
 }
 
 void
-VerifiableObstacleDetection::plot(const std::vector<Polygon>& detections_mission,
+VerifiableObstacleDetection::plot(const std::string& frame_name,
+		const std::vector<Polygon>& detections_mission,
 		const std::vector<Polygon>& detections_safety)
 {
 	if (!plot_)
@@ -301,9 +304,16 @@ VerifiableObstacleDetection::plot(const std::vector<Polygon>& detections_mission
 		return;
 	}
 
-	std::ofstream file_svg("output.svg", std::fstream::out | std::fstream::trunc);
+	std::ofstream log_file(log_path_ + "/" + frame_name + ".svg",
+			std::fstream::out | std::fstream::trunc);
 
-	boost::geometry::svg_mapper<Point2D> mapper(file_svg, 400, 400,
+	if (!log_file.is_open() || !log_file.good())
+	{
+		std::cerr << "[ERROR]: Failed to open log file." << std::endl;
+		return;
+	}
+
+	boost::geometry::svg_mapper<Point2D> mapper(log_file, 400, 400,
 			"style='fill-opacity:1;fill:rgb(255,255,255)'");
 
 	mapper.add(ego_);

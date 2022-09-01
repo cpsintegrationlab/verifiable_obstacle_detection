@@ -84,7 +84,7 @@ main()
 
 	VerifiableObstacleDetection verifiable_obstacle_detection;
 
-	verifiable_obstacle_detection.initializeForApollo();
+	verifiable_obstacle_detection.initializeForApollo("./");
 
 	const auto ego = verifiable_obstacle_detection.getEgo();
 
@@ -97,7 +97,8 @@ main()
 	std::cout << "detection_safety " << boost::geometry::dsv(detection_safety) << " has an area of "
 			<< boost::geometry::area(detection_safety) << "." << std::endl;
 
-	verifiable_obstacle_detection.processOneFrameForApollo(detections_mission, detections_safety);
+	verifiable_obstacle_detection.processOneFrameForApollo("0.bin", detections_mission,
+			detections_safety);
 
 	const auto detections_safety_distance_end_points =
 			verifiable_obstacle_detection.getDetectionsSafetyDistanceEndPoints();
