@@ -17,6 +17,7 @@ namespace verifiable_obstacle_detection
 {
 using Point2D = boost::geometry::model::d2::point_xy<double>;
 using Polygon = boost::geometry::model::polygon<Point2D>;
+using Segment = boost::geometry::model::segment<Point2D>;
 } // namespace verifiable_obstacle_detection
 
 #endif /* GEOMETRY_GEOMETRY_H_ */

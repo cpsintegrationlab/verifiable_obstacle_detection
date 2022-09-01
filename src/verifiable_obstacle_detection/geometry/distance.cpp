@@ -30,7 +30,7 @@ Distance::getDistanceEndPoints(const Polygon& polygon_1, const Polygon& polygon_
 	for (const auto &start_point : polygon_1.outer())
 	{
 		// Iterate through all vertices on polygon 2
-		for (int current = 0; current < polygon_2.outer().size(); current++)
+		for (unsigned current = 0; current < polygon_2.outer().size(); current++)
 		{
 			int next = (current + 1) % polygon_2.outer().size();
 			const Point2D& segment_point_1 = polygon_2.outer()[current];
@@ -52,7 +52,7 @@ Distance::getDistanceEndPoints(const Polygon& polygon_1, const Polygon& polygon_
 	for (const auto &start_point : polygon_2.outer())
 	{
 		// Iterate through all vertices on polygon 1
-		for (int current = 0; current < polygon_1.outer().size(); current++)
+		for (unsigned current = 0; current < polygon_1.outer().size(); current++)
 		{
 			int next = (current + 1) % polygon_1.outer().size();
 			const Point2D& segment_point_1 = polygon_1.outer()[current];
