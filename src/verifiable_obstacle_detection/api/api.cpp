@@ -350,7 +350,7 @@ VerifiableObstacleDetection::plot(const std::string& frame_name,
 	{
 		const Segment segment(segment_projected_mission_.first, segment_projected_mission_.second);
 		mapper->add(segment);
-		mapper->map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(255,0,0);stroke-width:5");
+		mapper->map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(200,0,0);stroke-width:5");
 	}
 
 	// Iterate through all safety layer projected segments
@@ -358,7 +358,7 @@ VerifiableObstacleDetection::plot(const std::string& frame_name,
 	{
 		const Segment segment(segment_projected_safety_.first, segment_projected_safety_.second);
 		mapper->add(segment);
-		mapper->map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(0,255,0);stroke-width:5");
+		mapper->map(segment, "fill-opacity:0;fill:rgb(0,0,0);stroke:rgb(0,200,0);stroke-width:5");
 	}
 
 	// Iterate through all overlap segments
