@@ -164,6 +164,7 @@ VerifiableObstacleDetection::clear()
 	detections_safety_distance_end_points_.clear();
 	segments_projected_mission_.clear();
 	segments_projected_safety_.clear();
+	segments_overlap_.clear();
 	detections_safety_coverages_.clear();
 }
 
